@@ -1,0 +1,30 @@
+	/*
+	 Find the number with the most digits.
+
+	If two numbers in the argument array have the same number of digits, return the first one in the array.
+	 */
+public class DuplicateEncoder {
+	  public static Scanner in = new Scanner(System.in);
+	  public static void main(String[] args) {		  
+		  int[] a = {-10, 1, 0, 1, 10};
+		  System.out.println(findLongest(a));
+		  
+	  }
+	  
+	
+		  public static int findLongest(int[] numbers) {
+		    int biggestNum = 0;
+		    int counter = 0;
+		    for(int i = 0; i < numbers.length; i++) {
+		      String a = numbers[i] + "";
+		      if(a.charAt(0) == '-')
+		    	  a = a.substring(1, a.length());
+		      if(a.length() > counter) {
+		    	  biggestNum = numbers[i];
+		    	  counter = a.length();
+		      }
+		    }		  
+		    return biggestNum;
+		}
+	  
+}
