@@ -1,0 +1,38 @@
+/*
+Given an array, find the int that appears an odd number of times.
+
+There will always be only one integer that appears an odd number of times.
+*/
+public class Main {
+	public static void main(String[] args) {		  
+		int[] b = {1,1,2,-2,5,2,4,4,-1,-2,5};
+		System.out.println(findIt(b));
+	}
+  
+	public static int findIt(int[] A) {		
+		for(int num : A) {
+			int counter = 0;
+			for(int i = 0; i < A.length; i++) {
+				if(num == A[i])
+					counter++;				
+			}
+			if(counter % 2 == 1)
+				return num;
+		}
+		return -1;
+	}
+	  
+}
+
+/* 
+*public class FindOdd {
+*  public static int findIt(int[] A) {
+*    int xor = 0;
+*    for (int i = 0; i < A.length; i++) {
+*      xor ^= A[i];
+*    }
+*    return xor;
+*  }
+*}
+*/
+
