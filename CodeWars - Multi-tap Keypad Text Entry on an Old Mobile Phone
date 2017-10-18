@@ -1,0 +1,53 @@
+ class Keypad {
+	private static char[][] arr = {{' ','0'}, 
+			{'1'}, {'*'}, {'#'},
+			{'A','B','C','2'},
+			{'D','E','F','3'},
+			{'G','H','I','4'},
+			{'J','K','L','5'},
+			{'M','N','O','6'},
+			{'P','Q','R','S','7'},
+			{'T','U','V','8'},
+			{'W','X','Y','Z','9'}} ;
+	
+	public static void main(String[] args) {		
+		System.out.println(solution2("WHERE DO U WANT 2 MEET L8R"));
+	}
+	
+	public static int presses(String str) {
+		str = str.toUpperCase();
+		int counter = 0;
+		for(String a : str.split("")) {		
+			if(a.equals(" "))
+				counter++;
+			else {
+				for(int i = 0; i < arr.length; i++) {
+					for(int j = 0; j < arr[i].length; j++) {
+						if(a.charAt(0) == arr[i][j]) {
+							System.out.println(a + "\t" + (j+1));
+							counter += j + 1;
+						}
+					}
+				}
+			}			
+		}
+		return counter;
+	}
+
+	/*
+	 * 	public class Keypad {
+		  static String[] keys = {"1", "ABC2", "DEF3", "GHI4", "JKL5", "MNO6", "PQRS7", "TUV8", "WXYZ9", "*", " 0", "#"};
+		  
+		  public static int presses(String phrase) {
+		    int nPresses = 0;
+		    
+		    for (char c : phrase.toUpperCase().toCharArray())
+		      for (String s : keys)
+		          nPresses += s.indexOf(c) + 1;
+		    return nPresses;
+		  }
+		}
+	 */
+  
+	  
+}
