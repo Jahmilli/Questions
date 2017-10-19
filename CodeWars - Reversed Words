@@ -1,0 +1,28 @@
+import java.util.*;
+
+/*
+ ReverseWords.reverseWords("The greatest victory is that which requires no battle");
+// should return "battle no requires which that is victory greatest The"
+ * 
+ */
+ class ReversedWords {
+ 
+	public static void main(String[] args) {				
+		System.out.println(reverseWords("eating like I"));
+	}
+	
+	
+	 public static String reverseWords(String str) {
+		str = new StringBuilder(str).reverse().toString();
+		String finalWord = "";
+		for(String s : str.split(" ")) {
+			for(int i = s.length()-1; i >= 0; i--) {
+				finalWord += s.charAt(i);
+			}
+			finalWord += " ";
+		}
+		
+		return finalWord.trim();
+	 }
+	
+}
