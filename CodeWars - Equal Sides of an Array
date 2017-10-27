@@ -1,0 +1,32 @@
+/*
+ * You are going to be given an array of integers. 
+ * Your job is to take that array and find an index N where the sum of the integers to the left of N is equal to the sum of the integers 
+ * to the right of N. If there is no index that would make this happen, return -1.
+ */
+
+//find number where sum of numbers to left is equal to sum on right
+//empty arr = 0
+//Loop through
+//check on each iteration if 0 -> n-1 == n+1 -> A.length-1 
+
+public class Kata {
+	public static void main(String[] args) {
+		System.out.println(findEvenIndex(new int[] {1,100,50,-51,1,1}));
+	}
+	
+	public static int findEvenIndex(int[] arr) {	
+		
+		for(int i = 0; i < arr.length; i++) {
+			int sum1 = 0;
+			int sum2 = 0;
+			for(int j = 0; j < i; j++) 
+				sum1 += arr[j];			
+			for(int j = i+1; j < arr.length; j++) 
+				sum2 += arr[j];
+			if(sum1 == sum2)
+				return i;
+		}
+		return -1;
+	}
+
+}
