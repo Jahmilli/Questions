@@ -17,10 +17,9 @@ node {
 
     stage('Optional 1: Unpublish V1 or V2?') {
       timeout(time: 2, unit: 'MINUTES') {
-        // check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
         check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
         [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-        ])
+        ]
       }
       echo "You chose ${check1}"
       if(check1) {
@@ -41,12 +40,9 @@ node {
         def didTimeout = false
         try {
             timeout(time: 2, unit: 'MINUTES') {
-            //  check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
-              //description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
-              //)]
             check2 = input id: 'Proceed2', message: 'Do you want to delete old SE', parameters: [
               [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-              ])
+              ]
             }
         } catch(err) { // timeout reached or input false
             def user = err.getCauses()[0].getUser()
@@ -92,3 +88,8 @@ node {
 //    currentBuild.result = 'FAILURE'
 //}
 //}
+
+// check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
+//  check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
+  //description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
+  //)]
