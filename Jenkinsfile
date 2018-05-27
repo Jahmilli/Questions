@@ -41,20 +41,18 @@ node {
       }
 
 
-        if (didTimeout) {
-            // do something on timeout
-            echo "no input was received before timeout"
-        } else if (userInput == true) {
-            // do something
-            echo "this was successful"
-        } else {
-            // do something else
-            echo "this was not successful"
-            currentBuild.result = 'FAILURE'
-        }
+      if(didTimeout) {
+          // do something on timeout
+          echo "no input was received before timeout"
+      } else if (userInput == true) {
+          // do something
+          echo "this was successful"
+      } else {
+          // do something else
+          echo "this was not successful"
+          currentBuild.result = 'FAILURE'
+      }
 
     }
 
-
-    stage
 }
