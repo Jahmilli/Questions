@@ -34,14 +34,15 @@ pipeline {
             env.check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
             [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to unpublish V1']
             ]
+            echo "You chose ${env.check1}"
+            if(${env.check1}) {
+              echo "Will now unpublish V1"
+            } else {
+              echo "Will now unpublish V2" //Call an unpublish stage here!
+            }
           }
         }
-        echo "You chose ${env.check1}"
-        if(${env.check1}) {
-          echo "Will now unpublish V1"
-        } else {
-          echo "Will now unpublish V2" //Call an unpublish stage here!
-        }
+
       }
     }
 
