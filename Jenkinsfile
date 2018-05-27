@@ -27,8 +27,7 @@ node {
       try {
           timeout(time: 1, unit: 'MINUTES') {
               userInput = input(
-              id: 'Proceed1', message: 'Was this successful?', parameters: [
-              [$class: 'booleanParam', defaultValue: true, description: '', name: 'Please confirm you agree with this']
+              id: 'Proceed1', message: 'Was this successful?'
               ])
           }
       } catch(err) { // timeout reached or input false
