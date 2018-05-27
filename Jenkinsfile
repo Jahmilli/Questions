@@ -1,4 +1,6 @@
 node {
+    def option1 = 'no'
+    def option2 = 'no'
 
     stage('Build Environment') {
         echo "Build stage"
@@ -14,7 +16,6 @@ node {
     }
 
     stage('Optional 1: Unpublish V1 or V2?') {
-      def option1 = 'no'
       timeout(time: 1, unit: 'MINUTES') {
         check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
       }
@@ -33,8 +34,7 @@ node {
     }
 
     if(option1 == 'yes') {
-      stage('Optional: Keep New SE') {
-        def option2 = 'no'
+      stage('Optional: Keep New SE') {        
         def didTimeout = false
         try {
             timeout(time: 1, unit: 'MINUTES') {
