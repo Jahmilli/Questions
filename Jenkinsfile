@@ -26,9 +26,7 @@ node {
       def didTimeout = false
       try {
           timeout(time: 1, unit: 'MINUTES') {
-              userInput = input(
-              id: 'Proceed1', message: 'Was this successful?'
-              ])
+              userInput = input(id: 'Proceed1', message: 'Was this successful?')
           }
       } catch(err) { // timeout reached or input false
           def user = err.getCauses()[0].getUser()
