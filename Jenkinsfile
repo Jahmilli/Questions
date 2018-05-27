@@ -50,6 +50,7 @@ node {
                 userInput = 'no'
                 echo "Aborted by: [${user}]"
             }
+        }
       }
     }
 
@@ -59,9 +60,6 @@ node {
       }
     }
 }
-
-
-
 
 //if(didTimeout) {
     // do something on timeout
