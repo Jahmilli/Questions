@@ -30,11 +30,13 @@ pipeline {
     stage('Optional 1: Unpublish V1 or V2?') {
       steps {
         timeout(time: 2, unit: 'MINUTES') {
-          def check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
-          [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to unpublish V1']
-          ]
+          script {
+            env.check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
+            [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to unpublish V1']
+            ]
+          }
         }
-        echo "You chose ${check1}"
+        echo "You chose ${env.check1}"
         if(check1) {
           echo "Will now unpublish V1"
         } else {
