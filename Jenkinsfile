@@ -5,12 +5,12 @@ node {
     def check2 = false
 
     stage('Build Environment') {
-        echo "Build stage"
-        echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
+      echo "Build stage"
+      echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
     }
 
     stage('Test Environment') {
-        echo "Test stage"
+      echo "Test stage"
     }
 
     stage('Publish V2') {
@@ -41,7 +41,7 @@ node {
 
 
     stage('Optional: Keep New SE') {
-      if(check1) {
+      when(check1) {
         def didTimeout = false
         try {
             timeout(time: 2, unit: 'MINUTES') {
@@ -63,21 +63,21 @@ node {
 
 
     stage('Delete V1') {
-      if(check1 && check2) {
+      when(check1 && check2) {
         echo "Deleting V1 as both checks have passed!"
       }
     }
 
 
     stage('Publish V1') {
-      if(check1 && !check2) {
+      when(check1 && !check2) {
         echo "Publishing V1!"
       }
     }
 
 
     stage('Unpublish V2') {
-      if(!check1|| !check2) {
+      when(!check1 || !check2) {
         echo "Unpublishing V2"
         //Need to unpublish a specified SE, whether it be
       }
