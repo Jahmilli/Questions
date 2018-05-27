@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    check1 = false
-    check2 = false
+    check1 = 'no'
+    check2 = 'no'
   }
   stages {
     stage('Build Environment') {
@@ -31,11 +31,9 @@ pipeline {
       steps {
         timeout(time: 2, unit: 'MINUTES') {
           script {
-            env.check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
-            [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to unpublish V1']
-            ]
+            env.check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
             echo "You chose ${env.check1}"
-            if("${env.check1}") {
+            if("${env.check1}" == 'yes') {
               echo "Will now unpublish V1"
             } else {
               echo "Will now unpublish V2" //Call an unpublish stage here!
