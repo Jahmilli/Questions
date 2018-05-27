@@ -1,3 +1,5 @@
+@Library('When') _
+
 node {
     def check1 = false
     def check2 = false
@@ -31,7 +33,7 @@ node {
 
 
     stage('Unpublish V1') {
-      if(check1) {
+      when(check1) {
         echo "Unpublishing V1"
       }
     }
