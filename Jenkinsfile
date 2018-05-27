@@ -37,7 +37,7 @@ pipeline {
           }
         }
         echo "You chose ${env.check1}"
-        if(check1) {
+        if(${env.check1}) {
           echo "Will now unpublish V1"
         } else {
           echo "Will now unpublish V2" //Call an unpublish stage here!
