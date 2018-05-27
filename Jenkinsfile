@@ -1,29 +1,24 @@
 node {
     def check1 = false
     def check2 = false
-    def check3 = false
-
-    def stage(name, execute, block) {
-      return stage(name, execute ? block : {echo "skipped stage $name"})
-    }
-
-    stage('Build Environment', true) {
+    
+    stage('Build Environment') {
         echo "Build stage"
         echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
     }
 
-    stage('Test Environment', true) {
+    stage('Test Environment') {
         echo "Test stage"
     }
 
-    stage('Publish V2', true) {
+    stage('Publish V2') {
       echo "Publishing V2"
     }
 
-    stage('Optional 1: Unpublish V1 or V2?', true) {
+    stage('Optional 1: Unpublish V1 or V2?') {
       timeout(time: 2, unit: 'MINUTES') {
         check1 = input id: 'Proceed1', message: 'Do you want to unpublish V1?', parameters: [
-        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to unpublish V1']
+        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
         ]
       }
       echo "You chose ${check1}"
@@ -34,13 +29,14 @@ node {
       }
     }
 
-    stage('Unpublish V1', check1) {
-      echo "Unpublishing V1"
+    if(check1) {
+      stage('Unpublish V1') {
+        echo "Unpublishing V1"
+      }
     }
 
-
-
-      stage('Optional: Keep New SE', check1) {
+    if(check1) {
+      stage('Optional: Keep New SE') {
         def didTimeout = false
         try {
             timeout(time: 2, unit: 'MINUTES') {
@@ -58,15 +54,13 @@ node {
             }
         }
       }
-
+    }
 
     if(check1 && check2) {
-      check3 = true
+      stage('Delete V1') {
+        echo "Deleting V1 as both checks have passed!"
+      }
     }
-    stage('Delete V1', check3) {
-      echo "Deleting V1 as both checks have passed!"
-    }
-
 
     if(check1 && !check2) {
       stage('Publish V1') {
