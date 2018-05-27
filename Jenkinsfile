@@ -16,7 +16,7 @@ node {
     }
 
     stage('Optional 1: Unpublish V1 or V2?') {
-      timeout(time: 1, unit: 'MINUTES') {
+      timeout(time: 2, unit: 'MINUTES') {
         check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
       }
       echo "You chose ${check1}"
@@ -37,7 +37,7 @@ node {
       stage('Optional: Keep New SE') {
         def didTimeout = false
         try {
-            timeout(time: 1, unit: 'MINUTES') {
+            timeout(time: 2, unit: 'MINUTES') {
               check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
               description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
               )]
@@ -54,7 +54,19 @@ node {
       }
     }
 
-    if(check1 == 'no') {
+    if(check1 == 'yes' && check2 == 'yes') {
+      stage('Delete V1') {
+        echo "Deleting V1 as both checks have passed!"
+      }
+    }
+
+    if(check1 == 'yes' && check2 == 'no') {
+      stage('Publish V1') {
+        echo "Publishing V1!"
+      }
+    }
+
+    if(check1 == 'no' || check2 == 'no') {
       stage('Unpublish V2') {
         //Need to unpublish a specified SE, whether it be
       }
