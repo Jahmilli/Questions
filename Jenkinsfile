@@ -1,6 +1,6 @@
 node {
-    def check1 = 'no'
-    def check2 = 'no'
+    def check1 = false
+    def check2 = false
 
     stage('Build Environment') {
         echo "Build stage"
@@ -17,57 +17,64 @@ node {
 
     stage('Optional 1: Unpublish V1 or V2?') {
       timeout(time: 2, unit: 'MINUTES') {
-        check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
+        // check1 = input message: 'Do you want to unpublish V1?', parameters: [choice(choices: 'yes\nno', description: '', name: 'Stage Input 1')]
+        check1 = id: 'Proceed1', message: 'Do you want to delete old SE', parameters: [
+        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
+        ])
       }
       echo "You chose ${check1}"
-      if(check1 == 'yes') {
+      if(check1) {
         echo "Will now unpublish V1"
       } else {
         echo "Will now unpublish V2" //Call an unpublish stage here!
       }
     }
 
-    if(check1 == 'yes') {
+    if(check1) {
       stage('Unpublish V1') {
         echo "Unpublishing V1"
       }
     }
 
-    if(check1 == 'yes') {
+    if(check1) {
       stage('Optional: Keep New SE') {
         def didTimeout = false
         try {
             timeout(time: 2, unit: 'MINUTES') {
-              check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
-              description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
-              )]
+            //  check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
+              //description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
+              //)]
+            check2 = id: 'Proceed1', message: 'Do you want to delete old SE', parameters: [
+              [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
+              ])
             }
         } catch(err) { // timeout reached or input false
             def user = err.getCauses()[0].getUser()
             if('SYSTEM' == user.toString()) { // SYSTEM means timeout.
                 didTimeout = true
             } else {
-                userInput = 'no'
+                check2 = false;
                 echo "Aborted by: [${user}]"
             }
         }
       }
     }
 
-    if(check1 == 'yes' && check2 == 'yes') {
+    if(check1 && check2) {
       stage('Delete V1') {
         echo "Deleting V1 as both checks have passed!"
       }
     }
 
-    if(check1 == 'yes' && check2 == 'no') {
+    if(check1 && !check2) {
       stage('Publish V1') {
         echo "Publishing V1!"
       }
     }
 
-    if(check1 == 'no' || check2 == 'no') {
+    if(!check1|| !check2) {
       stage('Unpublish V2') {
+        echo "Unpublishing V2"
         //Need to unpublish a specified SE, whether it be
       }
     }
@@ -85,7 +92,3 @@ node {
 //    currentBuild.result = 'FAILURE'
 //}
 //}
-
-// id: 'Proceed1', message: 'Do you want to delete old SE', parameters: [
-// [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-// ])
