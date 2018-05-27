@@ -1,11 +1,10 @@
 pipeline {
-  agent { any }
+  agent any
   environment {
     check1 = false
     check2 = false
   }
   stages {
-
     stage('Build Environment') {
         echo "Build stage"
         echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
