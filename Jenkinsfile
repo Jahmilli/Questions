@@ -1,6 +1,6 @@
 node {
-    def option1 = 'no'
-    def option2 = 'no'
+    def check1 = 'no'
+    def check2 = 'no'
 
     stage('Build Environment') {
         echo "Build stage"
@@ -27,18 +27,18 @@ node {
       }
     }
 
-    if(option1 == 'yes') {
+    if(check1 == 'yes') {
       stage('Unpublish V1') {
         echo "Unpublishing V1"
       }
     }
 
-    if(option1 == 'yes') {
-      stage('Optional: Keep New SE') {        
+    if(check1 == 'yes') {
+      stage('Optional: Keep New SE') {
         def didTimeout = false
         try {
             timeout(time: 1, unit: 'MINUTES') {
-              option2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
+              check2 = input message: 'Do you want to delete the old SE?', parameters: [choice(choices: 'yes\nno',
               description: 'yes: Delete old SE\nno: Initiate rollback', name: 'Optional Input 2'
               )]
             }
@@ -54,7 +54,7 @@ node {
       }
     }
 
-    if(option1 == 'no') {
+    if(check1 == 'no') {
       stage('Unpublish V2') {
         //Need to unpublish a specified SE, whether it be
       }
@@ -64,7 +64,7 @@ node {
 //if(didTimeout) {
     // do something on timeout
   //  echo "no input was received before timeout"
-//} else if (option2 == 'yes') {
+//} else if (check2 == 'yes') {
     // do something
 //    echo "this was successful"
 //} else {
