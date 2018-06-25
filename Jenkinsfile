@@ -8,6 +8,8 @@ node {
       echo "Build stage"
       echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
       echo "DIFFERENT BRANCH!"
+      echo "commit #2"
+      echo "AND COMMIT #3!"
     }
 
     stage('Optional 1: Unpublish V1 or V2?') {
