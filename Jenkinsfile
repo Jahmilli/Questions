@@ -7,14 +7,9 @@ node {
     stage('Build Environment') {
       echo "Build stage"
       echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
-    }
-
-    stage('Test Environment') {
-      echo "Test stage"
-    }
-
-    stage('Publish V2') {
-      echo "Publishing V2"
+      echo "DIFFERENT BRANCH!"
+      echo "commit #2"
+      echo "AND COMMIT #3!"
     }
 
     stage('Optional 1: Unpublish V1 or V2?') {
