@@ -8,7 +8,8 @@ node {
       echo "Build stage"
       echo "Details of build are: number ${env.BUILD_NUMBER}\nJob Name: ${env.JOB_NAME}"
       echo "DIFFERENT BRANCH!"
-      echo "Merging into master without squashing"
+      echo "I wonder if the validator will work O.o"
+      echo "the damn  pull"
     }
 
     stage('Optional 1: Unpublish V1 or V2?') {
